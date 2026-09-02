@@ -1,0 +1,906 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="description" content="Dawkhar Tours And Travels offers comfortable bus, car, and family trip bookings from Rahuri, Ahilyanagar, Maharashtra.">
+        <meta name="theme-color" content="#0f172a">
+
+        <title>Dawkhar Tours and Travels</title>
+        <style>
+            :root {
+                --navy: #0f172a;
+                --navy-soft: #1e293b;
+                --gold: #fbbf24;
+                --gold-dark: #f59e0b;
+                --white: #ffffff;
+                --bg: #f3f7fb;
+                --text: #1f2937;
+                --muted: #475569;
+                --card: #ffffff;
+                --shadow: rgba(15, 23, 42, 0.12);
+            }
+
+            * {
+                box-sizing: border-box;
+                scroll-margin-top: 90px;
+            }
+
+            html {
+                scroll-behavior: smooth;
+            }
+
+            nav a {
+                position: relative;
+            }
+
+            nav a::after {
+                content: "";
+                position: absolute;
+                left: 0;
+                bottom: -6px;
+                width: 0;
+                height: 2px;
+                background: var(--gold);
+                transition: width 0.25s ease;
+            }
+
+            nav a:hover::after {
+                width: 100%;
+            }
+
+            body {
+                margin: 0;
+                font-family: Arial, sans-serif;
+                background: linear-gradient(180deg, #f8fbff 0%, #eef5fb 100%);
+                color: var(--text);
+                line-height: 1.6;
+            }
+
+            a {
+                text-decoration: none;
+            }
+
+            nav {
+                position: sticky;
+                top: 0;
+                z-index: 20;
+                display: flex;
+                justify-content: center;
+                flex-wrap: wrap;
+                gap: 18px;
+                background: rgba(15, 23, 42, 0.96);
+                backdrop-filter: blur(8px);
+                padding: 18px 20px;
+                box-shadow: 0 10px 20px rgba(15, 23, 42, 0.12);
+            }
+
+            nav a {
+                color: #fff;
+                font-weight: 700;
+                letter-spacing: 0.02em;
+                transition: color 0.2s ease;
+            }
+
+            nav a:hover {
+                color: var(--gold);
+            }
+
+            .brand {
+                text-align: center;
+                font-size: 2.3rem;
+                font-weight: 900;
+                letter-spacing: 0.06em;
+                padding: 28px 20px 12px;
+                color: var(--navy);
+            }
+
+            .hero {
+                text-align: center;
+                min-height: clamp(320px, 62.5vw, 760px);
+                padding: 40px 20px;
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+                background-color: #f8fbff;
+                background-image: linear-gradient(rgba(15, 23, 42, 0.15), rgba(15, 23, 42, 0.15)),
+                    url("{{ url_for('static', filename='banner.jpg') }}"),
+                    url('https://images.unsplash.com/photo-1500534623283-312aade485b7');
+                background-size: cover, contain, cover;
+                background-repeat: no-repeat;
+                background-position: center;
+                color: white;
+            }
+
+            .hero h1 {
+                font-size: clamp(2.5rem, 5vw, 4.2rem);
+                margin: 0 0 12px;
+                letter-spacing: 0.02em;
+                font-weight: 900;
+            }
+
+            .hero p {
+                font-size: 1.25rem;
+                margin: 0 0 26px;
+                color: rgba(255,255,255,0.9);
+            }
+
+            .hero a,
+            .booking button,
+            .tour-card button,
+            .tour-book-button {
+                display: inline-block;
+                padding: 14px 30px;
+                background: linear-gradient(135deg, var(--gold), var(--gold-dark));
+                color: #111827;
+                border-radius: 999px;
+                font-weight: 900;
+                border: none;
+                cursor: pointer;
+                box-shadow: 0 14px 28px rgba(245, 158, 11, 0.28);
+                transition: transform 0.2s ease, box-shadow 0.2s ease;
+            }
+
+            .hero a:hover,
+            .booking button:hover,
+            .tour-card button:hover,
+            .tour-book-button:hover {
+                transform: translateY(-2px);
+                box-shadow: 0 18px 30px rgba(245, 158, 11, 0.3);
+            }
+
+            section {
+                padding: 72px 20px;
+            }
+
+            .section-title {
+                text-align: center;
+                font-size: 2.2rem;
+                margin: 0 0 24px;
+                color: var(--navy);
+            }
+
+            .booking,
+            .about,
+            .contact,
+            .gallery,
+            .tours,
+            .services,
+            .vehicles,
+            .destinatioon {
+                max-width: 1200px;
+                margin: 0 auto 30px;
+                background: rgba(255,255,255,0.68);
+                border: 1px solid rgba(148, 163, 184, 0.2);
+                border-radius: 28px;
+                box-shadow: 0 20px 45px rgba(15, 23, 42, 0.08);
+                padding-left: 20px;
+                padding-right: 20px;
+            }
+
+            .booking {
+                background: rgba(255,255,255,0.5);
+                border-radius: 22px;
+                padding-left: 20px;
+                padding-right: 20px;
+                text-align: center;
+            }
+
+            .booking p {
+                text-align: center;
+            }
+
+            .booking form {
+                max-width: 540px;
+                margin: 24px auto 0;
+                display: flex;
+                flex-direction: column;
+                gap: 14px;
+            }
+
+            .booking input {
+                padding: 14px 16px;
+                border: 1px solid #dbe4f0;
+                border-radius: 12px;
+                background: #fff;
+                font-size: 16px;
+                box-shadow: 0 4px 14px rgba(15, 23, 42, 0.04);
+            }
+
+            .about p,
+            .contact p {
+                max-width: 800px;
+                margin: 0 auto;
+                text-align: center;
+                font-size: 1.08rem;
+                color: var(--muted);
+            }
+
+            .services-container,
+            .gallery-container,
+            .tour-container,
+            .vehicle-container,
+            .destination-container,
+            .review-container,
+            .location-container {
+                display: flex;
+                justify-content: center;
+                flex-wrap: wrap;
+                gap: 24px;
+                margin-top: 24px;
+            }
+
+            .vehicles,
+            .destination {
+                max-width: 1200px;
+                margin: 0 auto 30px;
+                text-align: center;
+            }
+
+            .vehicles p,
+            .destination p {
+                text-align: center;
+                max-width: 700px;
+                margin: 0 auto 12px;
+                color: var(--muted);
+            }
+
+            .service-box,
+            .tour-card,
+            .vehicle-box,
+            .destination-box,
+            .review-box {
+                width: 270px;
+                background: var(--card);
+                border: 1px solid #e2e8f0;
+                border-radius: 22px;
+                padding: 28px 20px;
+                box-shadow: 0 12px 28px var(--shadow);
+                text-align: center;
+                transition: transform 0.2s ease, box-shadow 0.2s ease;
+            }
+
+            .destination-box {
+                background: linear-gradient(180deg, #ffffff 0%, #f8fbff 100%);
+                min-height: 240px;
+                display: flex;
+                flex-direction: column;
+                justify-content: flex-end;
+                border-top: 4px solid var(--gold);
+                overflow: hidden;
+                padding: 0;
+                text-align: left;
+            }
+
+            .destination-image {
+                height: 170px;
+                overflow: hidden;
+            }
+
+            .destination-image img {
+                width: 100%;
+                height: 100%;
+                object-fit: cover;
+                display: block;
+            }
+
+            .destination-content {
+                padding: 20px 18px 22px;
+            }
+
+            .destination-box h3 {
+                margin: 0 0 12px;
+                color: var(--navy);
+                font-size: 1.25rem;
+            }
+
+            .destination-box p {
+                margin: 0;
+                color: var(--muted);
+            }
+
+            .service-box,
+            .tour-card,
+            .vehicle-box {
+                width: 270px;
+                background: var(--card);
+                border: 1px solid #e2e8f0;
+                border-radius: 22px;
+                padding: 28px 20px;
+                box-shadow: 0 12px 28px var(--shadow);
+                text-align: center;
+                transition: transform 0.2s ease, box-shadow 0.2s ease;
+            }
+
+            .vehicle-box {
+                overflow: hidden;
+                padding: 0;
+                text-align: left;
+            }
+
+            .service-box:hover,
+            .tour-card:hover,
+            .vehicle-box:hover,
+            .review-box:hover {
+                transform: translateY(-5px);
+                box-shadow: 0 18px 35px rgba(15, 23, 42, 0.14);
+            }
+
+            .service-box h3,
+            .tour-card h3,
+            .vehicle-box h3,
+            .review-box h3 {
+                margin: 0 0 12px;
+                font-size: 1.25rem;
+                color: var(--navy);
+            }
+
+            .service-box p,
+            .tour-card p,
+            .vehicle-box p,
+            .review-box p {
+                margin: 0;
+                color: var(--muted);
+            }
+
+            .review-box {
+                background: linear-gradient(180deg, #ffffff 0%, #fffaf0 100%);
+                border-top: 4px solid var(--gold);
+                padding: 26px 22px;
+                text-align: left;
+            }
+
+            .review-stars {
+                color: var(--gold-dark);
+                font-size: 1.1rem;
+                letter-spacing: 0.15em;
+                margin-bottom: 12px;
+            }
+
+            .review-author {
+                margin-top: 16px;
+                font-weight: 700;
+                color: var(--navy);
+            }
+
+            .vehicle-photo {
+                height: 170px;
+                overflow: hidden;
+                background: #dfeaf7;
+            }
+
+            .vehicle-photo img {
+                width: 100%;
+                height: 100%;
+                object-fit: cover;
+                display: block;
+            }
+
+            .vehicle-box-content {
+                padding: 20px 18px 22px;
+            }
+
+            .gallery-item {
+                width: 240px;
+                height: 150px;
+                overflow: hidden;
+                border-radius: 18px;
+                box-shadow: 0 10px 22px rgba(15, 23, 42, 0.1);
+            }
+
+            .gallery-item img {
+                width: 100%;
+                height: 100%;
+                object-fit: cover;
+                display: block;
+            }
+
+            .location-card {
+                display: grid;
+                grid-template-columns: 320px 1fr;
+                gap: 24px;
+                align-items: center;
+                width: min(100%, 1100px);
+                background: linear-gradient(135deg, #ffffff 0%, #f8fbff 100%);
+                border: 1px solid #e2e8f0;
+                border-radius: 26px;
+                overflow: hidden;
+                box-shadow: 0 12px 28px var(--shadow);
+                padding: 0;
+            }
+
+            .location-info {
+                padding: 28px 22px 28px 28px;
+                background: linear-gradient(180deg, rgba(251, 191, 36, 0.12), rgba(15, 23, 42, 0.02));
+            }
+
+            .location-badge {
+                display: inline-block;
+                background: rgba(245, 158, 11, 0.12);
+                color: var(--navy);
+                font-size: 0.8rem;
+                font-weight: 700;
+                padding: 7px 12px;
+                border-radius: 999px;
+                letter-spacing: 0.04em;
+                text-transform: uppercase;
+                margin-bottom: 14px;
+            }
+
+            .location-info h3 {
+                margin: 0 0 12px;
+                color: var(--navy);
+                font-size: 1.7rem;
+            }
+
+            .location-info p {
+                margin: 0 0 10px;
+                color: var(--muted);
+                line-height: 1.7;
+            }
+
+            .location-info a {
+                display: inline-block;
+                margin-top: 10px;
+                color: var(--navy);
+                font-weight: 700;
+                text-decoration: underline;
+            }
+
+            .location-book-button {
+                background: #25d366;
+                border-radius: 999px;
+                color: white !important;
+                padding: 12px 18px;
+                text-align: center;
+                text-decoration: none !important;
+            }
+
+            .location-map {
+                min-height: 350px;
+            }
+
+            .location-map iframe {
+                width: 100%;
+                height: 100%;
+                min-height: 350px;
+                border: 0;
+                display: block;
+            }
+
+            .contact-buttons {
+                display: flex;
+                justify-content: center;
+                gap: 15px;
+                flex-wrap: wrap;
+                margin-top: 24px;
+            }
+
+            .contact-buttons a {
+                padding: 12px 26px;
+                border-radius: 999px;
+                color: white;
+                font-weight: 700;
+            }
+
+            .contact-buttons a:first-child {
+                background: var(--navy);
+            }
+
+            .contact-buttons a:last-child {
+                background: #25d366;
+            }
+
+            footer {
+                background: linear-gradient(135deg, var(--navy) 0%, var(--navy-soft) 100%);
+                color: white;
+                padding: 46px 20px 20px;
+            }
+
+            .footer-content {
+                max-width: 1100px;
+                margin: 0 auto;
+                display: grid;
+                grid-template-columns: 1.4fr 1fr 1.2fr;
+                gap: 36px;
+            }
+
+            .footer-column h3 {
+                margin: 0 0 14px;
+                color: var(--gold);
+                font-size: 1.15rem;
+            }
+
+            .footer-column p,
+            .footer-column a {
+                display: block;
+                margin: 0 0 9px;
+                color: rgba(255, 255, 255, 0.8);
+                line-height: 1.6;
+            }
+
+            .footer-column a:hover {
+                color: var(--gold);
+            }
+
+            .footer-bottom {
+                max-width: 1100px;
+                margin: 30px auto 0;
+                padding-top: 18px;
+                border-top: 1px solid rgba(255, 255, 255, 0.16);
+                text-align: center;
+                color: rgba(255, 255, 255, 0.7);
+                font-size: 0.9rem;
+            }
+
+            @media (max-width: 768px) {
+                section {
+                    padding: 48px 14px;
+                }
+
+                .brand {
+                    font-size: 1.55rem;
+                    padding: 22px 14px 10px;
+                }
+
+                nav {
+                    gap: 10px 14px;
+                    padding: 14px 12px;
+                }
+
+                nav a {
+                    font-size: 0.82rem;
+                }
+
+                .hero {
+                    min-height: 320px;
+                    padding: 32px 16px;
+                }
+
+                .hero h1 {
+                    font-size: 2.35rem;
+                }
+
+                .hero p {
+                    font-size: 1rem;
+                }
+
+                .section-title {
+                    font-size: 1.65rem;
+                }
+
+                .booking,
+                .about,
+                .contact,
+                .gallery,
+                .tours,
+                .services,
+                .vehicles,
+                .destination {
+                    border-radius: 20px;
+                    padding-left: 14px;
+                    padding-right: 14px;
+                }
+
+                .service-box,
+                .tour-card,
+                .vehicle-box,
+                .destination-box,
+                .review-box {
+                    width: min(100%, 340px);
+                }
+
+                .gallery-item {
+                    width: min(100%, 340px);
+                    height: 190px;
+                }
+
+                .location-card {
+                    grid-template-columns: 1fr;
+                    gap: 0;
+                    border-radius: 20px;
+                }
+
+                .location-info {
+                    padding: 24px 20px;
+                }
+
+                .location-info h3 {
+                    font-size: 1.4rem;
+                }
+
+                .location-book-button {
+                    width: 100%;
+                }
+
+                .location-map,
+                .location-map iframe {
+                    min-height: 280px;
+                }
+
+                footer {
+                    padding: 36px 20px 18px;
+                }
+
+                .footer-content {
+                    grid-template-columns: 1fr;
+                    gap: 24px;
+                    text-align: center;
+                }
+
+                .contact-buttons {
+                    flex-direction: column;
+                    align-items: center;
+                }
+
+                .contact-buttons a {
+                    width: 220px;
+                    text-align: center;
+                }
+            }
+        </style>
+    </head>
+    <body>
+        <div class="brand">Dawkhar Tours And Travels</div>
+
+        <nav>
+            <a href="#home">Home</a>
+            <a href="#booking">Book Your Trip</a>
+            <a href="#about">About Us</a>
+            <a href="#services">Our Services</a>
+            <a href="#vehicles">Vehicles</a>
+            <a href="#destinations">Popular Destinations</a>
+            <a href="#reviews">Reviews</a>
+            <a href="#location">Location</a>
+            <a href="#contact">Contact Us</a>
+            <a href="#gallery">Gallery</a>
+        </nav>
+
+        <section class="hero" id="home">
+        </section>
+
+        <section id="booking" class="booking">
+            <h2 class="section-title">Book Your Trip</h2>
+            <p>Fill the form below and send your booking enquiry directly on WhatsApp.</p>
+
+            <form id="booking-form">
+                <input type="text" name="name" placeholder="Your Name" required>
+                <input type="tel" name="mobile" placeholder="Your Mobile Number" required>
+                <input type="text" name="destination" placeholder="Destination" required>
+                <input type="date" name="date" required>
+                <input type="number" name="people" placeholder="Number of People" min="1" required>
+                <button type="submit">Book on WhatsApp</button>
+            </form>
+        </section>
+
+        <section id="about" class="about">
+            <h2 class="section-title">About Us</h2>
+            <p>Welcome to Dawkhar Tours And Travels! We provide safe, comfortable, and affordable travel services for families and groups.</p>
+            <p>Our goal is to make every journey comfortable, memorable, and enjoyable.</p>
+        </section>
+
+        <section class="services" id="services">
+            <h2 class="section-title">Our Services</h2>
+
+            <div class="services-container">
+                <div class="service-box">
+                    <h3>Bus and Car Booking</h3>
+                    <p>Comfortable vehicles for your travel.</p>
+                </div>
+
+                <div class="service-box">
+                    <h3>Tours Package</h3>
+                    <p>Enjoy memorable trips with our tour packages.</p>
+                </div>
+
+                <div class="service-box">
+                    <h3>Family Trips</h3>
+                    <p>Safe and comfortable travel for families and groups.</p>
+                </div>
+            </div>
+        </section>
+
+        <section class="vehicles" id="vehicles">
+            <h2 class="section-title">Our Vehicles</h2>
+            <p>Comfortable and well-maintained vehicles for your journey.</p>
+
+            <div class="vehicle-container">
+                <div class="vehicle-box">
+                    <div class="vehicle-photo">
+                        <img src="https://images.unsplash.com/photo-1544620347-c4fd4a3d5957?auto=format&fit=crop&w=900&q=80" alt="Tour bus">
+                    </div>
+                    <div class="vehicle-box-content">
+                        <h3>Our Bus</h3>
+                        <p>Comfortable travel for groups and families.</p>
+                    </div>
+                </div>
+
+                <div class="vehicle-box">
+                    <div class="vehicle-photo">
+                        <img src="https://images.unsplash.com/photo-1503376780353-7e6692767b70?auto=format&fit=crop&w=900&q=80" alt="Suzuki car">
+                    </div>
+                    <div class="vehicle-box-content">
+                        <h3>Our Car</h3>
+                        <p>Safe and comfortable travel for small groups.</p>
+                    </div>
+                </div>
+
+                <div class="vehicle-box">
+                    <div class="vehicle-photo">
+                        <img src="https://images.unsplash.com/photo-1583121274602-3e2820c69888?auto=format&fit=crop&w=900&q=80" alt="New Winger van">
+                    </div>
+                    <div class="vehicle-box-content">
+                        <h3>Our Mini Van</h3>
+                        <p>Ideal for short trips and family outings.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <section class="destination" id="destinations">
+            <h2 class="section-title">Popular Destinations</h2>
+            <p>Explore beautiful places with Dawkhar Tours And Travels.</p>
+
+            <div class="destination-container">
+                <div class="destination-box">
+                    <div class="destination-image">
+                        <img src="https://images.unsplash.com/photo-1501785888041-af3ef285b470?auto=format&fit=crop&w=900&q=80" alt="Bhandardara waterfall scenery">
+                    </div>
+                    <div class="destination-content">
+                        <h3>Bhandardara</h3>
+                        <p>Enjoy the beautiful waterfalls.</p>
+                    </div>
+                </div>
+
+                <div class="destination-box">
+                    <div class="destination-image">
+                        <img src="https://images.unsplash.com/photo-1528127269322-539801943592?auto=format&fit=crop&w=900&q=80" alt="Temple pilgrimage destination">
+                    </div>
+                    <div class="destination-content">
+                        <h3>Tuljapur, Akkalkot, Gangapur, Tirupati, Aayodhya</h3>
+                        <p>Enjoy the best worship places.</p>
+                    </div>
+                </div>
+
+                <div class="destination-box">
+                    <div class="destination-image">
+                        <img src="https://images.unsplash.com/photo-1516483638261-f4dbaf036963?auto=format&fit=crop&w=900&q=80" alt="Rajasthan travel destination">
+                    </div>
+                    <div class="destination-content">
+                        <h3>Gujrat, Rajasthan, Jaipur, Udaipur</h3>
+                        <p>Explore the city and its famous attractions.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="reviews" id="reviews">
+            <h2 class="section-title">Customer Reviews</h2>
+
+            <div class="review-container">
+                <div class="review-box">
+                    <div class="review-stars">★★★★★</div>
+                    <p>"Excellent service and very polite staff. The bus was clean and comfortable. We had a smooth trip from start to finish."</p>
+                    <div class="review-author">- Priya S.</div>
+                </div>
+
+                <div class="review-box">
+                    <div class="review-stars">★★★★★</div>
+                    <p>"We booked a family trip and the arrangements were perfectly managed. The drivers were friendly and punctual."</p>
+                    <div class="review-author">- Rahul M.</div>
+                </div>
+
+                <div class="review-box">
+                    <div class="review-stars">★★★★★</div>
+                    <p>"Very professional service and helpful support. Their travel plans made our vacation stress-free and enjoyable."</p>
+                    <div class="review-author">- Sneha P.</div>
+                </div>
+            </div>
+        </section>
+
+        <section id="gallery" class="gallery">
+            <h2 class="section-title">Our Travel Gallery</h2>
+
+            <div class="gallery-container">
+                <div class="gallery-item">
+                    <img src="https://images.unsplash.com/photo-1500534623283-312aade485b7" alt="Beautiful Mountains">
+                </div>
+                <div class="gallery-item">
+                    <img src="https://images.unsplash.com/photo-1507525428034-b723cf961d3e" alt="Sunny Beach">
+                </div>
+                <div class="gallery-item">
+                    <img src="https://images.unsplash.com/photo-1494526585095-c41746248156" alt="City Skyline">
+                </div>
+            </div>
+        </section>
+
+        <section id="tours" class="tours">
+            <h2 class="section-title">Our Popular Tours</h2>
+
+            <div class="tour-container">
+                <div class="tour-card">
+                    <h3>Hill Station Retreat</h3>
+                    <p>Comfortable family-friendly trips to scenic mountain destinations.</p>
+                    <a class="tour-book-button" href="https://wa.me/919764362005?text=Hello%2C%20I%20am%20interested%20in%20the%20Hill%20Station%20Retreat%20tour." target="_blank" rel="noopener noreferrer">Book This Tour</a>
+                </div>
+                <div class="tour-card">
+                    <h3>Beach Tour</h3>
+                    <p>Relax and enjoy beautiful beaches with your family.</p>
+                    <a class="tour-book-button" href="https://wa.me/919764362005?text=Hello%2C%20I%20am%20interested%20in%20the%20Beach%20Tour." target="_blank" rel="noopener noreferrer">Book This Tour</a>
+                </div>
+                <div class="tour-card">
+                    <h3>City Adventure</h3>
+                    <p>Explore cultural landmarks, food trails, and local experiences.</p>
+                    <a class="tour-book-button" href="https://wa.me/919764362005?text=Hello%2C%20I%20am%20interested%20in%20the%20City%20Adventure%20tour." target="_blank" rel="noopener noreferrer">Book This Tour</a>
+                </div>
+            </div>
+        </section>
+
+        <section class="location" id="location">
+            <h2 class="section-title">Our Office Location</h2>
+            <div class="location-container">
+                <div class="location-card">
+                    <div class="location-info">
+                        <span class="location-badge">Visit Our Office</span>
+                        <h3>Dawkhar Tours &amp; Travels</h3>
+                        <p>Station Road, Naka No. 5,<br>Dawkhar Khalwadi,<br>Rahuri, Ahilyanagar, Maharashtra</p>
+                        <p>Open Monday to Saturday</p>
+                        <a href="https://maps.google.com/?q=Station+Road+Naka+No.+5+Dawkhar+Khalwadi+Rahuri+Ahilyanagar+Maharashtra" target="_blank" rel="noopener noreferrer">Open in Google Maps</a>
+                        <a class="location-book-button" href="https://wa.me/919764362005?text=Hello%2C%20I%20would%20like%20to%20book%20a%20trip%20with%20Dawkhar%20Tours%20%26%20Travels." target="_blank" rel="noopener noreferrer">Book on WhatsApp</a>
+                    </div>
+                    <div class="location-map">
+                        <iframe src="https://www.google.com/maps?q=Station%20Road%20Naka%20No.%205%20Dawkhar%20Khalwadi%20Rahuri%20Ahilyanagar%20Maharashtra&output=embed" loading="lazy" allowfullscreen referrerpolicy="no-referrer-when-downgrade"></iframe>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="contact" class="contact">
+            <h2 class="section-title">Contact Us</h2>
+            <p>Call us for bookings and enquiries.</p>
+            <p>WhatsApp: +91 9764362005</p>
+            <p>Email: dawkhartoursandtravels@gmail.com</p>
+
+            <div class="contact-buttons">
+                <a href="tel:+919764362005">Call Now</a>
+                <a href="https://wa.me/919764362005" target="_blank">WhatsApp</a>
+            </div>
+        </section>
+
+        <script>
+            document.querySelector('#booking-form').addEventListener('submit', function (event) {
+                event.preventDefault();
+
+                const formData = new FormData(event.currentTarget);
+                const message = `Hello, I would like to book a trip with the following details:\n\nName: ${formData.get('name')}\nMobile Number: ${formData.get('mobile')}\nDestination: ${formData.get('destination')}\nTravel Date: ${formData.get('date')}\nNumber of Travelers: ${formData.get('people')}`;
+                window.location.href = `https://wa.me/919764362005?text=${encodeURIComponent(message)}`;
+            });
+        </script>
+
+        <footer>
+            <div class="footer-content">
+                <div class="footer-column">
+                    <h3>Dawkhar Tours And Travels</h3>
+                    <p>Travel safely, comfortably, and confidently with us.</p>
+                    <p>Travel With Us. Explore More. Create Memories.</p>
+                </div>
+                <div class="footer-column">
+                    <h3>Quick Links</h3>
+                    <a href="#home">Home</a>
+                    <a href="#booking">Book Your Trip</a>
+                    <a href="#destinations">Destinations</a>
+                    <a href="#location">Location</a>
+                </div>
+                <div class="footer-column">
+                    <h3>Contact Details</h3>
+                    <a href="tel:+919764362005">+91 9764362005</a>
+                    <a href="mailto:dawkhartoursandtravels@gmail.com">dawkhartoursandtravels@gmail.com</a>
+                    <p>Station Road, Naka No. 5,<br>Dawkhar Khalwadi,<br>Rahuri, Ahilyanagar, Maharashtra</p>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                &copy; 2026 Dawkhar Tours And Travels. All rights reserved.
+            </div>
+        </footer>
+    </body>
+</html>
